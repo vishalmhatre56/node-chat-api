@@ -20,7 +20,9 @@ io.on('connection', (socket) => {
         io.emit('newMessage', generateMessage(newMessage.from, newMessage.text));
         callback('message from server')
     })
-
+    socket.on('createLocationMessage',(coords)=>{
+        io.emit('newMessage',generateMessage('Admin', `${coords.latitude},${coords.longitude}`))
+    })
     socket.on('disconnect', () => {
         socket.broadcast.emit('newMessage', generateMessage("Admin", "One user left."));
     });
