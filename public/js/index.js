@@ -5,7 +5,7 @@ socket.on('connect', function () {
 });
 
 socket.on('newMessage', function (message){
-    console.log(`new message from:${message.from}\n${message.text}\n-${message.createdAt}`)
+    console.log(`%c${message.from}\n%c${message.text}\n%c-${message.createdAt}`,"color: green;font-size:14px","color: black","color: grey")
 })
 
 socket.on('disconnect', function () {
