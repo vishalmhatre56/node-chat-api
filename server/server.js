@@ -11,18 +11,12 @@ var io = socketIo(server);
 
 io.on('connection', (socket) => {
     console.log('New user connected.');
-    
-    socket.emit('newMessage', {
-        from: "Vishal",
-        text: "can we meet at 6pm today?",
-        createdAt: new Date()
-    });
 
     socket.on('createMessage',(newMessage)=>{
-        socket.emit('newMessage', {
+        io.emit('newMessage', {
             from: newMessage.from,
             text: newMessage.text,
-            createdAt: new Date()
+            createdAt: new Date().getTime()
         });
     })
 
