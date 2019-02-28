@@ -2,7 +2,7 @@ const path = require('path');
 const http = require('http');
 const express = require('express');
 const socketIo = require('socket.io');
-const {generateMessage} = require('./uitils/message');
+const {generateMessage,generateLocationMessage} = require('./uitils/message');
 
 const port = process.env.PORT || 3000;
 const publicPath = path.join(__dirname, '../public');
@@ -21,7 +21,7 @@ io.on('connection', (socket) => {
         callback('message from server')
     })
     socket.on('createLocationMessage',(coords)=>{
-        io.emit('newMessage',generateMessage('Admin', `${coords.latitude},${coords.longitude}`))
+        io.emit('newLocationMessage',generateLocationMessage('Admin', coords.latitude,coords.longitude))
     })
     socket.on('disconnect', () => {
         socket.broadcast.emit('newMessage', generateMessage("Admin", "One user left."));
