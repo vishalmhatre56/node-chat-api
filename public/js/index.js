@@ -24,11 +24,12 @@ socket.on('disconnect', function () {
 
 jQuery('#message-form').on('submit', function (e) {
     e.preventDefault();
+    var messageInputField = jQuery('[name=message]');
     socket.emit('createMessage', {
         from: "user",
-        text: jQuery('[name=message]').val()
+        text: messageInputField.val()
     }, function () {
-
+        messageInputField.val('');
     });
 });
 
