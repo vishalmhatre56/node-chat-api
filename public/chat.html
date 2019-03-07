@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Chat App</title>
+    <link rel="icon" href="./img/favicon.png">
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+
+<body class="chat">
+    <div class="chat__sidebar">
+        <h3>People</h3>
+        <div id="users"></div>
+    </div>
+
+    <div class="chat__main">
+        <div id="messages" class="chat__messages"></div>
+
+        <div class="compose">
+            <form id="message-form">
+                <input type="text" name="message" placeholder="Message" autocomplete="off" autofocus />
+                <button>Send</button>
+            </form>
+            <button id="send-location">Send Location</button>
+        </div>
+    </div>
+
+    <script id="message-template" type="text/template">
+        <div class="message">
+            <p>
+                <span class="message__name">{{from}}</span>
+                <span class="message__meta">{{time}}</span>
+            </p>
+            <p>{{text}}</p>
+        </div>
+    </script>
+    <script id="location-message-template" type="text/template">
+        <div class="message">
+            <p>
+                    <span class="message__name">{{from}}</span>
+                    <span class="message__meta">{{time}}</span>
+                </p>
+            <p>
+                <a href="{{url}}" target="_blank">My current location</a>
+            </p>
+        </div>
+    </script>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/libs/jquery.min.js"></script>
+    <script src="/js/libs/moment.js"></script>
+    <script src="/js/libs/mustache.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js"></script>
+    <script src="/js/chat.js"></script>
+</body>
+
+</html>
