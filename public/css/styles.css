@@ -56,6 +56,30 @@ button:disabled {
     background: #7c5cbf94;
 }
 
+.leave-button {
+    border: none;
+    border-radius: .3rem;
+    display: inline-block;
+    background-color: #265f82;
+    color: white;
+    cursor: pointer;
+    padding: 2px 6px 2px 6px;
+
+    font-size: 14px;
+  }
+  
+  .leave-button:hover {
+    border: none;
+    background: #1F4C69;
+    color: white;
+    padding: 2px 8px;
+  }
+  
+  .leave-button:disabled {
+    cursor: default;
+    background: #698ea5;
+  }
+
 /* Join Page Styles */
 
 .centered-form {

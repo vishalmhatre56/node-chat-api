@@ -14,7 +14,15 @@ const generateLocationMessage = (username, url) => {
     }
 }
 
+const generateInviteMessage = (username, url) => {
+    return {
+        username,
+        url,
+        createdAt: new Date().getTime()
+    }
+}
 module.exports = {
     generateMessage,
-    generateLocationMessage
+    generateLocationMessage,
+    generateInviteMessage
 }

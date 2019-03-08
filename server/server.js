@@ -3,7 +3,7 @@ const http = require('http')
 const express = require('express')
 const socketio = require('socket.io')
 const Filter = require('bad-words')
-const { generateMessage, generateLocationMessage } = require('./uitils/messages')
+const { generateMessage, generateLocationMessage, generateInviteMessage } = require('./uitils/messages')
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./uitils/users')
 
 const app = express()
@@ -17,7 +17,7 @@ app.use(express.static(publicDirectoryPath))
 
 io.on('connection', (socket) => {
     console.log('New WebSocket connection')
-
+    
     socket.on('join', (options, callback) => {
         const { error, user } = addUser({ id: socket.id, ...options })
 
@@ -36,6 +36,11 @@ io.on('connection', (socket) => {
 
         callback()
     })
+
+    socket.on('inviteUser', (inviteUser)=>{
+        console.log(inviteUser)
+        io.to(inviteUser.id).emit('inviteMessage', generateInviteMessage(inviteUser.from, `/chat.html?username=${inviteUser.username}&room=${inviteUser.room}-${inviteUser.username}-${inviteUser.from}`))
+    });
 
     socket.on('sendMessage', (message, callback) => {
         const user = getUser(socket.id)

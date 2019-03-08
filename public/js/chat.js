@@ -11,6 +11,7 @@ const $messages = document.querySelector('#messages')
 const messageTemplate = document.querySelector('#message-template').innerHTML
 const locationMessageTemplate = document.querySelector('#location-message-template').innerHTML
 const sidebarTemplate = document.querySelector('#sidebar-template').innerHTML
+const inviteMessageTemplate = document.querySelector('#invite-message-template').innerHTML
 
 // Options
 const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true })
@@ -58,10 +59,22 @@ socket.on('locationMessage', (message) => {
     autoscroll()
 })
 
+socket.on('inviteMessage', (message) => {
+    const html = Mustache.render(inviteMessageTemplate, {
+        username: message.username,
+        url: message.url,
+        createdAt: moment(message.createdAt).format('h:mm a')
+    })
+    $messages.insertAdjacentHTML('beforeend', html)
+    autoscroll()
+})
+
+
 socket.on('roomData', ({ room, users }) => {
     const html = Mustache.render(sidebarTemplate, {
         room,
-        users
+        users,
+        currentUserName:username
     })
     document.querySelector('#sidebar').innerHTML = html
 })
@@ -99,7 +112,7 @@ $sendLocationButton.addEventListener('click', () => {
             longitude: position.coords.longitude
         }, () => {
             $sendLocationButton.removeAttribute('disabled')
-            console.log('Location shared!')  
+            console.log('Location shared!')
         })
     })
 })
@@ -110,3 +123,7 @@ socket.emit('join', { username, room }, (error) => {
         location.href = '/'
     }
 })
+
+onPrivateChatClick=(inviteUser)=>{
+    socket.emit('inviteUser',inviteUser)
+}
